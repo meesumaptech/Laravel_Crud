@@ -9,13 +9,28 @@
     <form action="/formpost" method="post">
         @csrf
         <label for="">Name</label>
-        <input type="text" name="txtname"><br>
+        <input type="text" name="txtname">
+        <br>
+        @error('txtname')
+            <h6>{{$message}}</h6>
+        @enderror
+        
 
         <label for="">Email</label>
-        <input type="text" name="txtemail"><br>
+        <input type="text" name="txtemail">
+        <br>
+        @error('txtemail')
+            <h6>{{$message}}</h6>
+        @enderror
+        
 
         <label for="">Password</label>
-        <input type="password" name="txtpass"><br>
+        <input type="password" name="txtpass">
+        <br>
+        @error('txtpass')
+            <h6>{{$message}}</h6>
+        @enderror
+        
 
         <input type="submit" name="btnsub">
     </form>

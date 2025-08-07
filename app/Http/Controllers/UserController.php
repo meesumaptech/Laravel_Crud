@@ -15,6 +15,12 @@ class UserController extends Controller
     {
         return view("form");
     }
+    public function userdata()
+    {
+        $sno = 1;
+        $objuser = user::all();
+        return view("formdata",compact("objuser","sno"));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -29,6 +35,29 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            "txtname" => "required|unique:users,username",
+            "txtemail" => "required|unique:users,email",
+            "txtpass" => [
+                'required',
+                'string',
+                'min:10',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[!@#$%^&*()_+-]/', // Fixed regex to remove the '='
+            ],
+        ], 
+        [
+            'txtname.required' => 'The username field is required.',
+            'txtname.unique' => 'The username has already been taken.',
+            'txtemail.required' => 'The email field is required.',
+            'txtemail.unique' => 'The email has already been registered.',
+            'txtpass.required' => 'The password field is required.',
+            'txtpass.min' => 'The password must be at least 10 characters.',
+            'txtpass.regex' => 'The password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.',
+        ]);
+
         $objuser = new user();
         $objuser->username = $request->input('txtname');
         $objuser->email = $request->input('txtemail');
