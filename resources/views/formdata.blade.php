@@ -21,6 +21,7 @@
             <td>{{$row->email}}</td>
             <td>
                 <a href="{{route('updateuser',encrypt($row->id))}}">Edit</a>
+                <a href="{{route('delusr',encrypt($row->id))}}">Delete</a>
             </td>
         </tr> 
         @endforeach
