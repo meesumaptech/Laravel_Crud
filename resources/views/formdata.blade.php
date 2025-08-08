@@ -12,12 +12,16 @@
             <th>#</th>
             <th>Name</th>
             <th>Email</th>
+            <td></td>
         </tr>
-        @foreach ($objuser as $row)
+        @foreach($objuser as $row)
            <tr>
             <td>{{$sno++}}</td>
             <td>{{$row->username}}</td>
             <td>{{$row->email}}</td>
+            <td>
+                <a href="{{route('updateuser',encrypt($row->id))}}">Edit</a>
+            </td>
         </tr> 
         @endforeach
         

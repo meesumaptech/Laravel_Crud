@@ -85,17 +85,33 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(user $user)
+    public function edit(Request $id)
     {
-        //
+        $decid = Crypt::decrypt($id->route('id'));
+        $user = user::find($decid);
+        return view("updateform",compact("user"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, user $user)
+    public function update(Request $request, $userid)
     {
-        //
+       $user = user::find($userid);
+       
+       $user->username = $request->input('txtname');
+       $user->email = $request->input('txtemail');
+       $res = $user->save();
+
+       if($res)
+        {
+            return back()->with("success","Form Submitted Successfully");
+        }
+        else
+        {
+            return back()->with("fail","Error! in submitting form");
+        }
+
     }
 
     /**
